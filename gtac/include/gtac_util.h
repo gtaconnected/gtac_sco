@@ -1,0 +1,84 @@
+
+void StartGTACScript(const char* pszName)
+{
+	char szName[32];
+	strcpy(szName, pszName, 32);
+
+#if TARGET == TARGET_GTAIV
+	switch (GET_CURRENT_EPISODE())
+	{
+		case 0:
+			break;
+		case 1:
+			stradd(szName, "_e1", 32);
+			break;
+		case 2:
+			stradd(szName, "_e2", 32);
+			break;
+		default:
+			SCRIPT_ASSERT("[GTAC] Unknown episode");
+			break;
+	}
+#elif TARGET == TARGET_GTAV
+	stradd(szName, "_v", 32);
+#endif
+
+	GTAC_START_NEW_SCRIPT(szName);
+}
+
+void EnablePopulation(bool bEnabled)
+{
+	SET_REDUCE_PED_MODEL_BUDGET(false);
+	SET_REDUCE_VEHICLE_MODEL_BUDGET(false);
+	SET_DITCH_POLICE_MODELS(false);
+
+	if (bEnabled)
+	{
+		SET_PED_DENSITY_MULTIPLIER(1);
+		SET_SCENARIO_PED_DENSITY_MULTIPLIER(1, 1);
+		SET_CREATE_RANDOM_COPS(true);
+
+		SET_CAR_DENSITY_MULTIPLIER(1);
+		SET_RANDOM_CAR_DENSITY_MULTIPLIER(1);
+		SET_PARKED_CAR_DENSITY_MULTIPLIER(1);
+
+		DISABLE_CAR_GENERATORS(false, false);
+		FORCE_GENERATE_PARKED_CARS_TOO_CLOSE_TO_OTHERS(0);
+
+		SWITCH_GARBAGE_TRUCKS(true);
+		SWITCH_RANDOM_BOATS(true);
+		SWITCH_RANDOM_TRAINS(!IS_NETWORK_GAME_RUNNING());
+	}
+	else
+	{
+		SET_PED_DENSITY_MULTIPLIER(0);
+		SET_SCENARIO_PED_DENSITY_MULTIPLIER(0, 0);
+		SET_CREATE_RANDOM_COPS(false);
+
+		SET_CAR_DENSITY_MULTIPLIER(0);
+		SET_RANDOM_CAR_DENSITY_MULTIPLIER(0);
+		SET_PARKED_CAR_DENSITY_MULTIPLIER(0);
+
+		DISABLE_CAR_GENERATORS(true, true);
+
+		SWITCH_GARBAGE_TRUCKS(false);
+		SWITCH_RANDOM_BOATS(false);
+		SWITCH_RANDOM_TRAINS(false);
+	}
+}
+
+void DisableWanted()
+{
+	SET_MAX_WANTED_LEVEL(0);
+	SET_WANTED_MULTIPLIER(0.0);
+	SET_CREATE_RANDOM_COPS(false);
+	SET_DITCH_POLICE_MODELS(true);
+}
+
+void EnableWanted()
+{
+	SET_MAX_WANTED_LEVEL(6);
+	SET_WANTED_MULTIPLIER(1.0);
+	SET_CREATE_RANDOM_COPS(true);
+	SET_DITCH_POLICE_MODELS(false);
+}
