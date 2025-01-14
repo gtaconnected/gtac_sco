@@ -178,6 +178,7 @@ bool HostGameGTAC()
 	SET_LOADING_TEXT("Starting session...");
 	while (NETWORK_START_SESSION_PENDING())
 		WAIT(0);
+	SET_LOADING_TEXT("Loading GameMode...");
 	return true;
 }
 
