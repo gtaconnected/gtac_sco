@@ -366,6 +366,13 @@ void NetworkMain(bool bRestarted, bool bLoadedSavedGame)
 {
 	GTAC_LOG("NetworkMain");
 
+	if (!NETWORK_IS_NETWORK_AVAILABLE())
+	{
+		GTAC_LOG("NETWORK_IS_NETWORK_AVAILABLE returned false - Going back to single player...");
+		SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME();
+		return;
+	}
+
 #if SPCOOP
 	if (!IS_NETWORK_SESSION())
 	{
