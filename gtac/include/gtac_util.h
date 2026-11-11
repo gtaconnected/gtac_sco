@@ -47,7 +47,7 @@ void EnablePopulation(bool bEnabled)
 
 		SWITCH_GARBAGE_TRUCKS(true);
 		SWITCH_RANDOM_BOATS(true);
-		SWITCH_RANDOM_TRAINS(!IS_NETWORK_GAME_RUNNING());
+		SWITCH_RANDOM_TRAINS(true);
 	}
 	else
 	{

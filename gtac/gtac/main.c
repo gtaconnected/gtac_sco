@@ -411,7 +411,6 @@ void NetworkMain(bool bRestarted, bool bLoadedSavedGame)
 //#endif
 	SET_GPS_REMAINS_WHEN_TARGET_REACHED_FLAG(false);
 	SET_NO_RESPRAYS(0);
-	SWITCH_RANDOM_TRAINS(false); // Trains must default off in network sessions
 
 #if SPCOOP
 	// SP coop
@@ -609,14 +608,6 @@ Host:
 		{
 			SetNetworkPlayer();
 		}
-
-#if 0
-		// Trains fine if 1 player
-		if (GET_NUMBER_OF_PLAYERS() <= 1)
-			SWITCH_RANDOM_TRAINS(true);
-		else
-			SWITCH_RANDOM_TRAINS(false);
-#endif
 
 		UpdatePrisoners();
 
