@@ -306,15 +306,17 @@ void SetupAfterNetworkGameRunning(bool bNetworkMain)
 		ALLOCATE_SCRIPT_TO_OBJECT("ambClubLights", -21824081, 100, 50.00000000, -1);
 	}
 
-	if (DOES_SCRIPT_EXIST("EmpireTelescope") && DOES_SCRIPT_EXIST("EmpireDown") && DOES_SCRIPT_EXIST("cablecars"))
+	if (DOES_SCRIPT_EXIST("EmpireTelescope") && DOES_SCRIPT_EXIST("EmpireDown"))
 	{
 		REGISTER_WORLD_POINT_SCRIPT_BRAIN("EmpireTelescope", 80.0);
 		REGISTER_WORLD_POINT_SCRIPT_BRAIN("EmpireDown", 80.0);
 		//REGISTER_WORLD_POINT_SCRIPT_BRAIN("ambHotel", 50.0);
 		//REGISTER_WORLD_POINT_SCRIPT_BRAIN("ambChurchDoors", 100.0);
 		//REGISTER_WORLD_POINT_SCRIPT_BRAIN("ambToiletDoors", 25.0);
-		REGISTER_WORLD_POINT_SCRIPT_BRAIN("cablecars", 75.0);
 	}
+
+	//if (DOES_SCRIPT_EXIST("cablecars"))
+	//	REGISTER_WORLD_POINT_SCRIPT_BRAIN("cablecars", 75.0);
 #endif
 
 #if 0
