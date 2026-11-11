@@ -87,24 +87,28 @@ bool FindAndJoinGame(networkGameConfig* pGameConfig)
 		return false;
 	}
 	SET_LOADING_TEXT("Joining...");
-	if (!NETWORK_JOIN_GAME(0))
+	for (int i = 0; i < Count; i++)
 	{
-		GTAC_LOG("NETWORK_JOIN_GAME - Failed");
-		CleanupNet();
-		return false;
+		if (!NETWORK_JOIN_GAME(i))
+		{
+			GTAC_LOG("NETWORK_JOIN_GAME - Failed");
+			CleanupNet();
+			continue;
+		}
+		while (NETWORK_JOIN_GAME_PENDING())
+			WAIT(0);
+		if (!NETWORK_JOIN_GAME_SUCCEEDED())
+		{
+			GTAC_LOG("NETWORK_JOIN_GAME_SUCCEEDED - Failed");
+			CleanupNet();
+			continue;
+		}
+		SET_LOADING_TEXT("Network game pending...");
+		while (IS_NETWORK_GAME_PENDING())
+			WAIT(0);
+		return true;
 	}
-	while (NETWORK_JOIN_GAME_PENDING())
-		WAIT(0);
-	if (!NETWORK_JOIN_GAME_SUCCEEDED())
-	{
-		GTAC_LOG("NETWORK_JOIN_GAME_SUCCEEDED - Failed");
-		CleanupNet();
-		return false;
-	}
-	SET_LOADING_TEXT("Network game pending...");
-	while (IS_NETWORK_GAME_PENDING())
-		WAIT(0);
-	return true;
+	return false;
 }
 
 bool JoinGame()
